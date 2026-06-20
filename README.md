@@ -4,6 +4,22 @@ Video Curator turns YouTube or Instagram videos into structured markdown notes f
 
 This public version contains no cookies, sessions, personal collection URLs, local machine paths, real `.env` values, or curated output.
 
+## Features
+
+- One command turns a YouTube or Instagram video into a clean markdown note
+- Pulls the transcript from captions, with an optional Whisper fallback when a video has none
+- Summarizes through a local, OpenAI-compatible router — the transcript never leaves your machine for a hosted summarizer
+- Asks Claude for a short routing decision: where the note belongs and why
+- Batch-imports from saved YouTube playlists and Instagram collections
+- Reads standing rules from a learnings file, so your curation sharpens over time
+
+## Tech stack
+
+- Python 3.11+
+- yt-dlp and ffmpeg for download and transcript/frame extraction
+- Playwright for Instagram imports; Whisper (via Groq or OpenAI) as a caption fallback
+- A local FreeLLMAPI-compatible router for summaries, and the Claude CLI for routing
+
 ## Prerequisites
 
 - Python 3.11 or newer
@@ -78,6 +94,16 @@ python curate.py --help
 
 Keep real source files local. `import-sources*.json`, `import-state*.json`, cookies, browser profiles, `.env`, generated notes, and frames are ignored by git.
 
+## How it works
+
+Each run moves one video through five steps:
+
+1. **Download** the video with `yt-dlp`.
+2. **Extract** the transcript and frame context with `ffmpeg`.
+3. **Summarize** the transcript through the local router.
+4. **Route** — ask Claude for a one-line decision on where the note belongs.
+5. **Write** a markdown note into the output queue.
+
 ## Notes
 
 Instagram access depends on your own account/session and may be subject to Instagram's terms and rate limits. Use this for personal review of content you can access, and do not ship cookies or session exports.
@@ -88,3 +114,7 @@ Instagram access depends on your own account/session and may be subject to Insta
 python -m pytest -q
 python curate.py --help
 ```
+
+## License
+
+MIT — see [LICENSE](LICENSE).
