@@ -1,0 +1,29 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+venv/
+
+# Local config and secrets
+.env
+.env.*
+!.env.example
+
+# Instagram auth/cookies/session state - never commit
+ig-profile/
+ig-playwright-profile/
+chrome-profile/
+playwright-profile/
+storage_state*.json
+*.sqlite
+*.cookies
+*.cookies.txt
+cookies*.txt
+import-sources*.json
+import-state*.json
+curator-notes/
+frames/
+*.log
+.claude-codex-log.md
+.codex-session-changes/
+.DS_Store
